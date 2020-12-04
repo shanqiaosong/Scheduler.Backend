@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
-        Gate::define('accessAccount',function ($user,$account,$request){
+        Gate::define('access_account',function (?User $user,$account,$request){
             return $request->credential==$account->credential;
         });
     }

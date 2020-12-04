@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
-use Illuminate\Auth\Access\Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -33,19 +33,27 @@ class AccountController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return string[]
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|string[]
      */
     public function store(Request $request)
     {
         //
+        $request = $request->validate([
+            'student_id' => 'required|unique:accounts|max:255',
+            'credential' => 'required',
+            'school_abbr'=>'required|max:255',
+            'allow_email_notification' => 'required|boolean',
+            'allow_push_notification' => 'required|boolean',
+        ]);
         $account=new Account();
-        $account->student_id=$request->student_id;
-        $account->credential=$request->credential;
-        $account->school_abbr=$request->school_abbr;
-        $account->allow_email_notification=$request->allow_email_notification;
-        $account->allow_push_notification=$request->allow_push_notification;
+        $account->student_id=$request['student_id'];
+        $account->credential=$request['credential'];
+        $account->school_abbr=$request['school_abbr'];
+        $account->allow_email_notification=$request['allow_email_notification'];
+        $account->allow_push_notification=$request['allow_push_notification'];
+        $account->save();
         return [
-            'status'=>'created'
+            'message'=>'created'
         ];
     }
 
@@ -58,7 +66,7 @@ class AccountController extends Controller
     public function show(Account $account,Request $request)
     {
         //
-        Gate::authorize('access_account',$account,$request);
+        Gate::authorize('access_account',[$account,$request]);
         return $account;
     }
 
@@ -83,19 +91,27 @@ class AccountController extends Controller
     public function update(Request $request, Account $account)
     {
         //
-        Gate::authorize('access_account',$account,$request);
+        Gate::authorize('access_account',[$account,$request]);
+        $validated = $request->validate([
+            'school_abbr'=>'max:255',
+            'allow_email_notification' => 'boolean',
+            'allow_push_notification' => 'boolean',
+            'last_deadline_modification_time' => 'date',
+            'last_course_modification_time' => 'date',
+        ]);
         if ($request->has('school_abbr'))
-            $account->school_abbr=$request->school_abbr;
+            $account->school_abbr=$validated['school_abbr'];
         if ($request->has('allow_email_notification'))
-            $account->allow_email_notification=$request->allow_email_notification;
+            $account->allow_email_notification=$validated['allow_email_notification'];
         if ($request->has('allow_push_notification'))
-            $account->allow_push_notification=$request->allow_push_notification;
+            $account->allow_push_notification=$validated['allow_push_notification'];
         if ($request->has('last_deadline_modification_time'))
-            $account->allow_push_notification=$request->allow_push_notification;
+            $account->last_deadline_modification_time=$validated['last_deadline_modification_time'];
         if ($request->has('last_course_modification_time'))
-            $account->allow_push_notification=$request->allow_push_notification;
+            $account->last_course_modification_time=$validated['last_course_modification_time'];
+        $account->save();
         return [
-            'status'=>'updated'
+            'message'=>'updated'
         ];
     }
 

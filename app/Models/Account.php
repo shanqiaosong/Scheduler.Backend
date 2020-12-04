@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Crypt;
 class Account extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'student_id';
     function setCredentialAttribute($credential){
         $this->attributes['credential'] = Crypt::encryptString($credential);
     }
