@@ -16,6 +16,13 @@ class CreateAccountsTable extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('student_id');
+            $table->string('credential');
+            $table->string('school_abbr');
+            $table->boolean('allow_email_notification')->nullable();
+            $table->boolean('allow_push_notification')->nullable();
+            $table->timestamp('last_deadline_modification_time');
+            $table->timestamp('last_course_modification_time')->nullable();
         });
     }
 
