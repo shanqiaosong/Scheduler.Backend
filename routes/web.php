@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('test/hello',function (){
     return 'Hello World';
 });
+
+Route::resource('class_infos','App\Http\Controllers\ClassInfoController');
