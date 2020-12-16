@@ -39,24 +39,22 @@ class ClassInfoController extends Controller
     public function store(Request $request)
     {
         //
-        $request = $request->validate([
-            'uid' => 'required|unique:class_infos|max:255',
+        $validated = $request->validate([
+            'uid' => 'required|unique:class_infos',
             'course_name'=>'required|max:255',
-            'description' => 'nullable',
-            'exam_info' => 'nullable',
-            'teachers' => 'nullable',
+            'teachers' => 'required',
             'semester' => 'required',
-            'update_timestamp' => 'date',
         ]);
         $classInfo=new ClassInfo();
-        $classInfo->uid=$request['uid'];
-        $classInfo->course_name=$request['course_name'];
-        $classInfo->description=$request['description'];
-        $classInfo->exam_info=$request['exam_info'];
-        $classInfo->teachers=$request['teachers'];
-        $classInfo->class_time=$request['class_time'];
-        $classInfo->semester=$request['semester'];
-        $classInfo->update_timestamp=$request['update_timestamp'];
+        $classInfo->uid=$validated['uid'];
+        $classInfo->course_name=$validated['course_name'];
+        if ($request->has('description'))
+            $classInfo->description=$validated['description'];
+        if ($request->has('exam_info'))
+            $classInfo->exam_info=$validated['exam_info'];
+        $classInfo->teachers=$validated['teachers'];
+        //$classInfo->class_time=$validated['class_time'];
+        $classInfo->semester=$validated['semester'];
         $classInfo->save();
         return [
             'message'=>'created'
@@ -96,12 +94,11 @@ class ClassInfoController extends Controller
     {
         //
         $validated = $request->validate([
-            'uid' => 'required|unique:class_infos|max:255',
-            'course_name'=>'required|max:255',
+            'course_name'=>'max:255',
             'description' => 'nullable',
             'exam_info' => 'nullable',
             'teachers' => 'nullable',
-            'semester' => 'required',
+            'semester' => 'nullable',
             'update_timestamp' => 'date',
         ]);
         if ($request->has('course_name'))

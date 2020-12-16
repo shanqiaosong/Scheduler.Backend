@@ -14,14 +14,13 @@ class CreateClassInfosTable extends Migration
     public function up()
     {
         Schema::create('class_infos', function (Blueprint $table) {
-//            $table->id();
             $table->timestamps();
             $table->string('uid')->primary();
             $table->string('course_name');
-            $table->string('description');
-            $table->string('exam_info');
+            $table->string('description')->nullable();
+            $table->string('exam_info')->nullable();
             $table->string('teachers');
-            $table->string('class_time');//
+            //$table->string('class_time');
             $table->string('semester');
             $table->timestamp('update_timestamp')->nullable();
         });
