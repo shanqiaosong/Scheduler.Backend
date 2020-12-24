@@ -14,8 +14,17 @@ class CreateDdlsTable extends Migration
     public function up()
     {
         Schema::create('ddls', function (Blueprint $table) {
-            $table->id();
             $table->timestamps();
+            $table->string('uid')->primary();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->string('eventType')->nullable();
+            $table->string('courseObjectID')->nullable();
+            $table->string('sourseName')->nullable();
+            $table->string('dueTime');
+            $table->string('isFinished');
+            $table->string('isDeleted');
+            $table->timestamp('update_timestamp')->nullable();
         });
     }
 
