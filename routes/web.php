@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('test/hello',function (){
     return 'Hello World';
 });
+
+Route::resource('ddls', 'App\Http\Controllers\DdlController');
