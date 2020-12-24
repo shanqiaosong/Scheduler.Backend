@@ -96,8 +96,8 @@ class AccountController extends Controller
             'school_abbr'=>'max:255',
             'allow_email_notification' => 'boolean',
             'allow_push_notification' => 'boolean',
-//            'last_deadline_modification_time' => 'date',
-//            'last_course_modification_time' => 'date',
+            'last_deadline_modification_time' => 'string',
+            'last_course_modification_time' => 'string',
         ]);
         if ($request->has('school_abbr'))
             $account->school_abbr=$validated['school_abbr'];
