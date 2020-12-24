@@ -21,8 +21,8 @@ class CreateAccountsTable extends Migration
             $table->string('school_abbr');
             $table->boolean('allow_email_notification')->nullable();
             $table->boolean('allow_push_notification')->nullable();
-            $table->timestamp('last_deadline_modification_time')->nullable();
-            $table->timestamp('last_course_modification_time')->nullable();
+            $table->string('last_deadline_modification_time')->nullable();
+            $table->string('last_course_modification_time')->nullable();
         });
     }
 
