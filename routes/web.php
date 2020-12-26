@@ -21,6 +21,7 @@ Route::get('test/hello',function (){
     return 'Hello World';
 });
 
+Route::resource('ddls', 'App\Http\Controllers\DdlController');
 Route::resource('accounts','App\Http\Controllers\AccountController');
-
 Route::resource('accounts','App\Http\Controllers\ClassTimeController');
+
