@@ -22,3 +22,5 @@ Route::get('test/hello',function (){
 });
 
 Route::resource('accounts','App\Http\Controllers\AccountController');
+
+Route::resource('accounts','App\Http\Controllers\ClassTimeController');
