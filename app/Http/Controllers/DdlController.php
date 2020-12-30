@@ -36,7 +36,7 @@ class DdlController extends Controller
     public function store(Request $request)
     {
         $request = $request->validate([
-            'uid' => 'required|unique:ddl',
+            'uid' => 'required|unique:ddls',
             'name' => 'required',
             'description' => 'required',
             'eventType' => 'required',
@@ -58,7 +58,7 @@ class DdlController extends Controller
         $ddl->isDeleted=$request['isDeleted'];
         $ddl->save();
         return[
-            'massage'=>'created'
+            'message'=>'created'
         ];
     }
 
@@ -99,7 +99,7 @@ class DdlController extends Controller
             'eventType' => 'nullable',
             'courseObjectID' => 'nullable',
             'sourceName' => 'nullable',
-            'dueTime' => 'date',
+            'dueTime' => 'string',
             'isFinished' => 'boolean',
             'isDeleted' => 'boolean',
             'update_timestamp' => 'date',
@@ -107,21 +107,22 @@ class DdlController extends Controller
         if ($request->has('name'))
             $ddl->name=$validated['name'];
         if ($request->has('description'))
-            $ddl->name=$validated['description'];
+            $ddl->description=$validated['description'];
         if ($request->has('eventType'))
-            $ddl->name=$validated['eventType'];
+            $ddl->eventType=$validated['eventType'];
         if ($request->has('courseObjectID'))
-            $ddl->name=$validated['courseObjectID'];
+            $ddl->namecourseObjectID=$validated['courseObjectID'];
         if ($request->has('sourceName'))
-            $ddl->name=$validated['sourceName'];
+            $ddl->sourceName=$validated['sourceName'];
         if ($request->has('dueTime'))
-            $ddl->name=$validated['dueTime'];
+            $ddl->dueTime=$validated['dueTime'];
         if ($request->has('isFinished'))
-            $ddl->name=$validated['isFinished'];
+            $ddl->isFinished=$validated['isFinished'];
         if ($request->has('isDeleted'))
-            $ddl->name=$validated['isDeleted'];
+            $ddl->isDeleted=$validated['isDeleted'];
         if ($request->has('update_timestamp'))
-            $ddl->name=$validated['update_timestamp'];
+            $ddl->update_timestamp=$validated['update_timestamp'];
+        $ddl->save();
         return [
             'message'=>'updated'
         ];

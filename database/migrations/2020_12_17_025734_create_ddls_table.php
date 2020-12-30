@@ -20,7 +20,7 @@ class CreateDdlsTable extends Migration
             $table->string('description')->nullable();
             $table->string('eventType')->nullable();
             $table->string('courseObjectID')->nullable();
-            $table->string('sourseName')->nullable();
+            $table->string('sourceName')->nullable();
             $table->string('dueTime');
             $table->string('isFinished');
             $table->string('isDeleted');
